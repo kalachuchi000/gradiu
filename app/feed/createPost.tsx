@@ -20,7 +20,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
-import { addPost } from '../components/actions'
+import { addPost, clientRevalidatePath } from '../components/actions'
 import {
     Dialog,
     DialogContent,
@@ -69,6 +69,7 @@ export function CreatePost() {
                     // setTimeout(() => {
                            
                     // }, 1000);
+                    clientRevalidatePath("/feed")
                     setIsOpen(false)
                     
                     console.log("post done")

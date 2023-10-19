@@ -16,28 +16,17 @@ import PublishedPost from './post'
 import { getPublishedPosts } from '../components/actions'
 import { postType } from '../components/formSchema'
 import { Pocket } from 'lucide-react'
-
-async function getPosts() {
-    try{
-      const res : Response = await fetch(`${process.env.NEXTAUTH_URL}/api/fetchPosts`, {cache: "no-cache",  method: "GET", 
-        headers: {"Content-Type": "application/json"}})
-      return await res.json()
-      
-    } catch (error) {
-      //  console.log(error)
-      return undefined
-    }
-  }
+import { prisma } from '../components/singletons'
 
 export default async function Feed() {
-    const object  = await getPosts()
+
+    const object  = await prisma.post.findMany()
    // console.log(object)
     if(object === undefined) {
        return (  <h1> Error </h1>  )
     }
-    // console.log("obj: "+object)
-    // console.log("data:" + object.data)
-    const postsArray : postType[] = object.data
+
+    const postsArray : postType[] = object
     
     return (
         <>

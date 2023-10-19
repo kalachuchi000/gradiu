@@ -1,7 +1,9 @@
 'use server'
 import { PrismaClient } from '@prisma/client';
 import { postType } from './formSchema';
-const prisma = new PrismaClient
+import { prisma } from './singletons';
+import { revalidatePath } from 'next/cache';
+
 
 export const addPost = async (values: postType)=>{
     try{
@@ -15,6 +17,10 @@ export const addPost = async (values: postType)=>{
         return false
        
     }
+}
+
+export const clientRevalidatePath = async (stringPath : string) => {
+    revalidatePath(stringPath)
 }
 
 export const getPublishedPosts = async ()=>{
